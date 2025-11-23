@@ -1,20 +1,20 @@
 // clang-format off
 #include "machine.h"
-SN(ok) { (o[s] + anchor)(b, o, t, a, r, s + 1); }
-SN(accept) { P, ok(b, o, t, a, r, s); }
+S(ok) { (o[s] + anchor)(b, o, t, a, r, s + 1); }
+S(accept) { P, ok(b, o, t, a, r, s); }
 
 static const char *string = "!!3+(2*3)";
-SN(term_1     ) { if (string[b] ==  '1') ok(b + 1, o, t, a, r, s); }
-SN(term_2     ) { if (string[b] ==  '2') ok(b + 1, o, t, a, r, s); }
-SN(term_3     ) { if (string[b] ==  '3') ok(b + 1, o, t, a, r, s); }
-SN(term_oparen) { if (string[b] ==  '(') ok(b + 1, o, t, a, r, s); }
-SN(term_cparen) { if (string[b] ==  ')') ok(b + 1, o, t, a, r, s); }
-SN(term_plus  ) { if (string[b] ==  '+') ok(b + 1, o, t, a, r, s); }
-SN(term_minus ) { if (string[b] ==  '-') ok(b + 1, o, t, a, r, s); }
-SN(term_bang  ) { if (string[b] ==  '!') ok(b + 1, o, t, a, r, s); }
-SN(term_mul   ) { if (string[b] ==  '*') ok(b + 1, o, t, a, r, s); }
-SN(term_div   ) { if (string[b] ==  '/') ok(b + 1, o, t, a, r, s); }
-SN(term_null  ) { if (string[b] == '\0') ok(b + 1, o, t, a, r, s); }
+S(term_1     ) { if (string[b] ==  '1') ok(b + 1, o, t, a, r, s); }
+S(term_2     ) { if (string[b] ==  '2') ok(b + 1, o, t, a, r, s); }
+S(term_3     ) { if (string[b] ==  '3') ok(b + 1, o, t, a, r, s); }
+S(term_oparen) { if (string[b] ==  '(') ok(b + 1, o, t, a, r, s); }
+S(term_cparen) { if (string[b] ==  ')') ok(b + 1, o, t, a, r, s); }
+S(term_plus  ) { if (string[b] ==  '+') ok(b + 1, o, t, a, r, s); }
+S(term_minus ) { if (string[b] ==  '-') ok(b + 1, o, t, a, r, s); }
+S(term_bang  ) { if (string[b] ==  '!') ok(b + 1, o, t, a, r, s); }
+S(term_mul   ) { if (string[b] ==  '*') ok(b + 1, o, t, a, r, s); }
+S(term_div   ) { if (string[b] ==  '/') ok(b + 1, o, t, a, r, s); }
+S(term_null  ) { if (string[b] == '\0') ok(b + 1, o, t, a, r, s); }
 enum symbols {
   expression,
   constant,

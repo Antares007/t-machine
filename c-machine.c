@@ -83,7 +83,7 @@ S(Red_descend                                 ) { Red_book_of_descending(b, o, 0
 S(Red_next_dword                              ) { Red_book_of_descending(b, o, t + 2, a, r, s); }
 S(Red_match_definition                        ) { if (o[o[r + 1] + 1] == o[t + 1]) (Red_walk(b, o, t, a, r, s), Red_next_dword(b, o, t, a, r, s));
                                                   else                        Red_next_dword(b, o, t, a, r, s); }
-N(Red_book_of_descending                      ) { static N((*nars[])) = {reTurn,
+S(Red_book_of_descending                      ) { static N((*nars[])) = {reTurn,
                                                                          Red_match_definition,
                                                                          Red_next_dword,
                                                                          Red_next_dword};
@@ -93,7 +93,7 @@ S(Yellow_descend                              ) { Yellow_book_of_descending(b, o
 S(Yellow_next_dword                           ) { Yellow_book_of_descending(b, o, t + 2, a, r, s); }
 S(Yellow_match_definition                     ) { if (o[o[r + 1] + 1] == o[t + 1]) (Yellow_walk(b, o, t, a, r, s), Yellow_next_dword(b, o, t, a, r, s));
                                                   else                        Yellow_next_dword(b, o, t, a, r, s); }
-N(Yellow_book_of_descending                   ) { static N((*nars[])) = {reTurn, Yellow_match_definition, Yellow_next_dword, Yellow_next_dword};
+S(Yellow_book_of_descending                   ) { static N((*nars[])) = {reTurn, Yellow_match_definition, Yellow_next_dword, Yellow_next_dword};
                                                   nars[o[t]](b, o, t, a, r, s); };
 S(Pink_branch_Red_descend                     ) { o[--s] = Pink,    o[--s] = t, o[--s] = r,    Red_descend(b, o, t, a, s, s); }
 S(Blue_branch_Red_descend                     ) { o[--s] = Blue,    o[--s] = t, o[--s] = r,    Red_descend(b, o, t, a, s, s); }

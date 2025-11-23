@@ -11,7 +11,7 @@
      o[r+2] = walk-book color at the moment the T-word was branched
  s — branching space and continuation stack of the books
 */
-#define SN(argo) static N(argo)
+#define S(argo) static N(argo)
 
 #define P printf("%10s %d %d %d %d %d\n", __func__, b, t, a, r, s)
 extern int printf(const char *__restrict __format, ...);
