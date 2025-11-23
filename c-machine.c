@@ -1,5 +1,4 @@
 // clang-format off
-// α-machine
 #define N(argo) void argo(int b, int *o, int t, int a, int r, int s)
 #define S(argo) static N(argo)
 typedef enum { Pink, Blue, Green, Yellow, Red } Walk_book_colors;
