@@ -28,5 +28,5 @@ void s10(char *o, char s) { (H)(o, s); }
 void s11(char *o, char s) { o[s] = 0, (s2)(o, s + 1); }
 void  s1(char *o, char s) { static void (*narg[])(char *o, char s) = {s10, s11};
                             narg[o[s]](o, s); };
-int main(               ) { char o[1024], s = 0;
+int main(               ) { char o[1024] = {}, s = 0;
                             o[s++] = 1, o[s++] = 1, o[s++] = 0, s1(o, 0); }
