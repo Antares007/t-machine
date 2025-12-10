@@ -1,21 +1,21 @@
-/* The c-machine is a discrete mathematical–linguistic construct defined directly within a
+/* The c-machine is a discrete mathematical–linguistic construct defined in a 
    hardware-oriented computational model:
    https://github.com/Antares007/t-machine
 
-   The c-machine employs:
-     * the C language’s call stack to support systematic backtracking;
-     * an `int o[]` tape that encodes the grammar together with the machine’s operational state;
-     * `int a` — a pointer marking the end of the grammar region on the tape;
-              note: `a` may also be advanced beyond the grammar region to store backtracking information,
-              enabling incremental parsing. This allows parsing in asynchronous scenarios.
-     * `int s` — a pointer marking the lower boundary of the tape space used to record the branching
-                 path (ray) chain during descent;
+   The machine uses:
+     * `int o[]` — a single tape that stores both the grammar and the machine’s 
+                   operational state. Grammar rules live at the start of the tape and 
+                   are encoded using meta-opcodes 1, 2, and 3. A `0` marks the end 
+                   of the grammar section.
+
+     * `int a` — a pointer used to store backtracking information. This makes 
+                 incremental and asynchronous parsing possible.
+
+     * `int s` — a pointer marking the lower boundary of tape space reserved for 
+                 recording the branching (ray) chain during descent.
+
      * `int r` — the current branching ray chain associated with the active symbol.
 
-   For a more advanced design in which the entire grammar and the full operational state of the machine —
-   including the mechanisms for backtracking — are stored on a unified single tape (encompassing grammar,
-   time, and space), see the JavaScript implementation:
-   https://github.com/Antares007/s-machine
 */
 
 // clang-format off
@@ -24,17 +24,36 @@
 #define S(argo) __attribute__((noinline)) static N(argo) 
 #define C b, o, t, a, r, s
 N(anchor) {}
-S(and                                         ) { int os = o[s++]; (os+anchor)(C); }
-S(or                                          ) { (void)"backtrack to choice"; }
+S(and                                         ) { int os = o[s++]; (anchor + os)(C); }
+S(or                                          ) { int oa = o[--a]; (anchor + oa)(C); }
 S(Green_walk); S(Red_walk); S(Blue_walk);
 S(Red_ascend                                  ) { t = o[r + 1], r = o[r],   Red_walk(C); }
 S(Blue_ascend                                 ) { t = o[r + 1], r = o[r],  Blue_walk(C); }
 S(Green_ascend                                ) { t = o[r + 1], r = o[r], Green_walk(C); }
 S(Red_book_of_ascending                       ) { static N((*nars[])) = {or, Blue_ascend, Green_ascend, 0, Red_ascend};
                                                   nars[o[r + 2]](C); };
+
+S(choose                                      ) { s = o[--a];
+                                                  r = o[--a];
+                                                  t = o[--a];
+                                                  b = (const char*)anchor + o[--a],
+                                                  or(C); }
+
+S(choice                                      ) { int n = o[s++];
+                                                  o[a++] = b - (const char*)anchor,
+                                                  o[a++] = t,
+                                                  o[a++] = r,
+                                                  o[a++] = s,
+                                                  o[a++] = choose - anchor,
+                                                  (n + anchor)(C); }
+
 S(Yellow_descend);
-S(cursor_Yellow_descend_Green_ascend          ) { (Green_ascend(C), Yellow_descend(C)); };
-S(cursor_Yellow_descend_Blue_ascend           ) { ( Blue_ascend(C), Yellow_descend(C)); };
+S(cursor_Yellow_descend_Green_ascend          ) { o[--s] = Green_ascend - anchor,
+                                                  o[a++] = Yellow_descend - anchor,
+                                                  choice(C); };
+S(cursor_Yellow_descend_Blue_ascend           ) { o[--s] =  Blue_ascend - anchor,
+                                                  o[a++] = Yellow_descend - anchor,
+                                                  choice(C); };
 S(Blue_book_of_ascending                      ) { static N((*nars[])) = {Yellow_descend,
                                                                          cursor_Yellow_descend_Blue_ascend,
                                                                          cursor_Yellow_descend_Green_ascend,
@@ -103,7 +122,10 @@ S(Yellow_walk                                 ) { t += 2, Yellow_book_of_walk(C)
 S(Red_book_of_descending);
 S(Red_descend                                 ) { t  = 0, Red_book_of_descending(C); }
 S(Red_descend2                                ) { t += 2, Red_book_of_descending(C); }
-S(Red_match_definition                        ) { if (o[o[r + 1] + 1] == o[t + 1]) (Red_walk(C), Red_descend2(C));
+S(Red_match_definition                        ) { if (o[o[r + 1] + 1] == o[t + 1])
+                                                    o[--s] = Red_walk - anchor,
+                                                    o[a++] = Red_descend2 - anchor,
+                                                    choice(C);
                                                   else Red_descend2(C); }
 S(Red_book_of_descending                      ) { static N((*nars[])) = {or,
                                                                          Red_match_definition,
@@ -113,7 +135,10 @@ S(Red_book_of_descending                      ) { static N((*nars[])) = {or,
 S(Yellow_book_of_descending);
 S(Yellow_descend                              ) { t  = 0, Yellow_book_of_descending(C); }
 S(Yellow_descend2                             ) { t += 2, Yellow_book_of_descending(C); }
-S(Yellow_match_definition                     ) { if (o[o[r + 1] + 1] == o[t + 1]) (Yellow_walk(C), Yellow_descend2(C));
+S(Yellow_match_definition                     ) { if (o[o[r + 1] + 1] == o[t + 1])
+                                                    o[--s] = Yellow_walk - anchor,
+                                                    o[a++] = Yellow_descend2 - anchor,
+                                                    choice(C);
                                                   else Yellow_descend2(C); }
 S(Yellow_book_of_descending                   ) { static N((*nars[])) = {or, Yellow_match_definition, Yellow_descend2, Yellow_descend2};
                                                   nars[o[t]](C); };

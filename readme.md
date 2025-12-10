@@ -21,15 +21,6 @@ a nested machine architecture, the CPU, and the c-machine;
 for that reason, the operational language for this two-headed
  unstoppable is written in two-edged arrays as executable pro-grammar rules.
 
-The c-machine uses the call stack for backtracking, and we can actually
-pinpoint exactly where that happens. Whenever you see two function calls
-in a row, that’s where the stack grows, that’s the “gobbling up” part.
-Everything else, the deeply nested single-call patterns, compiles down to
-indirect jumps.
-
-So the machine looks super-nested, but structurally it’s mostly flat with
-a few deliberate points where the stack is used to explore alternatives.
-
 The diagram shows merged coloured configuration traces to investigate how left recursion is eliminated.
 `A -> a, A -> B o, B -> b, B -> A t`
 ![](./docs/ss_118.png)
