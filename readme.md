@@ -1,5 +1,5 @@
 # c-machine.c
-[![](./docs/ts_114.png)](https://pasteboard.co/hZfdhHfhR396.jpg)
+[![](./docs/st_036.png)](./docs/ss_166.png)
 
 This is a specification of a computing machine directly specified (Godelized) in the C language.
 
