@@ -105,6 +105,11 @@ function ast_binary (operator) { return binary_sa('ast')((left, right) => ({type
 
 ```
 
+The sentence (grammar rule, production) has two sides, beginning and the end, "dot."
+When the walk (except the Red walk and Blue walk if it is under the Yellow branch) reaches the end of the sentence,
+it means that we interpreted the base of the current symbol, and now it is time to grow left recursive definitions
+on top of the base. So Red descend avoids left recursive sentences, and Yellow descend only selects left recursive ones if any.
+
 The diagram shows merged coloured configuration traces to investigate how left recursion is eliminated.
 `A -> a, A -> B o, B -> b, B -> A t`
 ![](./docs/ss_118.png)
