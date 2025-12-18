@@ -1,21 +1,19 @@
-1. **In the beginning was the Step, and the Step was with the Machine, and the Step was the Machine.**
-The Step is the fundamental unit of execution in the machine. It represents a bounded execution interval in which state, control flow, and semantic context are jointly defined and advanced.
-
-2. **From the Step flows composition.**
-Composition is defined in terms of Steps. A Step may contain nested Steps, may initiate execution of a subgrammar, and always executes within explicit bounds, producing a well-defined result upon completion.
-
-3. **All grammars are executed through the Step.**
-Grammar execution is mediated exclusively by Steps. Without execution by a Step, a grammar remains a static specification and does not induce computation.
-
-4. **In the Step was the power to compose without ceremony.**
-The Step functions as the primary unit of composition. It subsumes roles typically assigned to functions, objects, or lambda abstractions by unifying control flow and semantic interpretation within a single executable construct.
-
-5. **This form of composition cuts through accidental complexity.**
-This model reduces accidental complexity by making execution boundaries explicit. Systems that rely on layered abstractions without exposing execution boundaries obscure the locus of computation and hinder precise reasoning about behavior.
-
 # c-machine.c
 [![](./docs/st_036.png)](./docs/ss_166.png)
-
+> 1. **In the beginning was the Step, and the Step was with the Machine, and the Step was the Machine.**
+> The Step is the fundamental unit of execution in the machine. It represents a bounded execution interval in which state, control flow, and semantic context are jointly defined and advanced.
+> 
+> 2. **From the Step flows composition.**
+> Composition is defined in terms of Steps. A Step may contain nested Steps, may initiate execution of a subgrammar, and always executes within explicit bounds, producing a well-defined result upon completion.
+> 
+> 3. **All grammars are executed through the Step.**
+> Grammar execution is mediated exclusively by Steps. Without execution by a Step, a grammar remains a static specification and does not induce computation.
+> 
+> 4. **In the Step was the power to compose without ceremony.**
+> The Step functions as the primary unit of composition. It subsumes roles typically assigned to functions, objects, or lambda abstractions by unifying control flow and semantic interpretation within a single executable construct.
+> 
+> 5. **This form of composition cuts through accidental complexity.**
+> This model reduces accidental complexity by making execution boundaries explicit. Systems that rely on layered abstractions without exposing execution boundaries obscure the locus of computation and hinder precise reasoning about behavior.
 
 This is a specification of a computing machine directly specified (Godelized) in the C language.
 
