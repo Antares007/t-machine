@@ -4,9 +4,11 @@
 > The Step is the fundamental unit of execution in the machine. It represents a bounded execution interval in which state, control flow, and semantic context are jointly defined and advanced.
 > 
 > 2. **From the Step flows composition.**
-> Composition is defined in terms of Steps. A Step may contain nested Steps, may initiate execution of a subgrammar, and always executes within explicit bounds, producing a well-defined result upon completion.
+> Composition is defined in terms of Steps. A Step may contain nested Steps, may initiate execution of an ambiguous Step, and always executes within explicit bounds, producing a well-defined result upon completion.
 > 
-> 3. **All grammars are executed through the Step.**
+> 3. **All ambiguous Steps are executed through the Step.**
+> An ambiguous Step defines a bounded space of admissible continuations.
+> This space is grammar.
 > Grammar execution is mediated exclusively by Steps. Without execution by a Step, a grammar remains a static specification and does not induce computation.
 > 
 > 4. **In the Step was the power to compose without ceremony.**
